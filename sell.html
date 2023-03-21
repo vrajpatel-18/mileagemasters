@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,600;0,700;1,100&display=swap"
+          rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-----Header -->
+<section id="header2">
+    <my-header></my-header>
+    <div class="banner">
+        <h1>Sell/Trade</h1>
+        <p>List your car on our online database or get a cash offer - both safe, secure, and easy.</p>
+
+        <!--List your car on our online database or get a cash offer - both safe, secure, and easy. -->
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <ul class="nav nav-pills mb-3 d-flex justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-0 px-5 active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-sell"
+                        type="button" role="tab" aria-controls="pills-sell" aria-selected="true">Sell
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-0 px-5" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-trade"
+                        type="button" role="tab" aria-controls="pills-trade" aria-selected="false">Trade
+                </button>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane bg-transparent fade active show" id="pills-sell" role="tabpanel"
+                 aria-labelledby="pills-home-tab">
+
+                <form action="#">
+                    <div class="container mt-4 p-0 p-md-4">
+                        <div class="row">
+                            <div class="mb-4 col-md-12 mb-4 text-center">
+                                <h2 class="text-light display-6">Sell your car with ease!</h2>
+                            </div>
+                            <div class="mb-4 col-md-3">
+                                <label class="small fw-light">Year</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+
+                            </div>
+                            <div class="mb-4 col-md-6">
+                                <label class="small fw-light">Brand</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-3">
+                                <label class="small fw-light">Model</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-6">
+                                <label class="small fw-light">Miles</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-6">
+                                <label class="small fw-light">Price</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Trim</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Transmission</label>
+                                <select name="" id="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="" class="sellListOption">Manual</option>
+                                    <option value="" class="sellListOption">Automatic</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Cylinders</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Horse Power</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Fuel Type</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="" class="sellListOption">Gas</option>
+                                    <option value="" class="sellListOption">Diesel</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">City MPG</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">Highway MPG</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">Drive Type</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="" class="sellListOption">AWD</option>
+                                    <option value="" class="sellListOption">FWD</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">Car Type</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="" class="sellListOption">Sedan</option>
+                                    <option value="" class="sellListOption">SUV</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Color</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Condition</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="" class="sellListOption">Good</option>
+                                    <option value="" class="sellListOption">Bad</option>
+                                    <option value="" class="sellListOption">Excellent</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-12 text-end py-3">
+                                <a href="thankyou.html" class="btn btn-light rounded-0 px-5">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane bg-transparent fade " id="pills-trade" role="tabpanel"
+                 aria-labelledby="pills-profile-tab">
+                <form action="#">
+                    <div class="container mt-4 p-0 p-md-4">
+                        <div class="row">
+                            <div class="mb-4 col-md-12 mb-4 text-center">
+                                <h2 class="text-light display-6">Trade your car, hassle free</h2>
+                            </div>
+                            <div class="mb-4 col-md-3">
+                                <label class="small fw-light">Year</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+
+                            </div>
+                            <div class="mb-4 col-md-6">
+                                <label class="small fw-light">Brand</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-3">
+                                <label class="small fw-light">Model</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-6">
+                                <label class="small fw-light">Miles</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-6">
+                                <label class="small fw-light">Price</label>
+                                <input type="number" value="0" id="in_price" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Trim</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Transmission</label>
+                                <select name="" id="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="">Manual</option>
+                                    <option value="">Automatic</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Cylinders</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Horse Power</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Fuel Type</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="">Gas</option>
+                                    <option value="">Diesel</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">City MPG</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">Highway MPG</label>
+                                <input type="number" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">Drive Type</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="">AWD</option>
+                                    <option value="">FWD</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-2">
+                                <label class="small fw-light">Car Type</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="">Sedan</option>
+                                    <option value="">SUV</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Color</label>
+                                <input type="text" class="form-control bg-transparent text-white rounded-0">
+                            </div>
+                            <div class="mb-4 col-md-4">
+                                <label class="small fw-light">Condition</label>
+                                <select name="" class="form-select bg-transparent rounded-0 text-white">
+                                    <option value="">Good</option>
+                                    <option value="">Bad</option>
+                                    <option value="">Excellent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 pt-4 text-center">
+                                <h2 class="display-6 fw-light">Select a car to trade with</h2>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="container pb-0">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="small fw-light">Start Typing to search your desired
+                                                car</label>
+                                            <input type="search" list="carsList"
+                                                   class="form-control rounded-0 bg-transparent text-white"
+                                                   id="car-search">
+                                            <datalist id="carsList"></datalist>
+                                        </div>
+                                        <div class="col-md-12 mt-4">
+                                            <div id="car-placeholder">
+                                                <div class='p-5 text-center'>No Car Selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4 col-md-12 text-end py-3" id="submit-trade">
+                                <a href="thankyou.html" class="btn btn-light rounded-0 px-5">Submit</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Footer-->
+<my-footer></my-footer>
+
+<div class="loader-wrapper">
+  <span class="loader">
+    <span class="loader-inner">
+    </span>
+  </span>
+</div>
+
+
+
+<script src="../script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="../trade.js?1"></script>
+</body>
+</html>
