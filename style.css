@@ -18,6 +18,11 @@ body {
   --primary-color: #e3311d;
 }
 
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @font-face {
   font-family: 'titleFont';
   src: url(".ttf"); }
@@ -33,7 +38,8 @@ body {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url(images/citycar.jpg);
   background-position: center;
   background-size: cover;
-  position: relative;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 #header2 {
@@ -138,6 +144,20 @@ div.intro p {
   font-size: 26px;
   font-weight: 500;
 }
+
+
+@media (max-width: 700px) {
+  div.banner p {
+    font-size: 15px;
+    line-height: 18px;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;}
+
+  div.banner h1 {
+    font-size: 48px;
+    margin-bottom: 10px; }
+  }
 
 
 .hero_btn {
@@ -928,7 +948,8 @@ div.cat p {
 .scroll {
   height: 300px;
   overflow: hidden;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+}
 
 .menu li {
   padding: 11.2px 8px;
