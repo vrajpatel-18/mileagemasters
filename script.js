@@ -6,9 +6,10 @@ class MyHeader extends HTMLElement {
           <a href="index.html"><img src="../images/logos/logosquareblack.png" alt="logo" class="headerLogo"></a>
           <ul>
             <i class='bx bx-window-close' onclick="hideMenu()"></i>
+            <li class="headerLink"><a href="index.html" onclick="hideMenu()">Home</a></li>
             <li class="headerLink"><a href="shop.html" onclick="hideMenu()">Buy</a></li>
             <li class="headerLink"><a href="sell.html" onclick="hideMenu()">Sell/Trade</a></li>
-            <li class="headerLink"><a href="about.html" onclick="hideMenu()">About</a></li>
+            <li class="headerLink"><a href="about.html" onclick="hideMenu()">About</a></li> 
             <li class="headerLink"><a href="contact.html" onclick="hideMenu()">Contact</a></li>
           </ul>
         </nav>
@@ -340,11 +341,11 @@ let honda_odyssey_2020 = {
     hwyMPG: 28,
     driveType: "FWD",
     carType: "Minivan",
-    color: "Blue",
+    color: "Light Gray",
     condition: "Good",
     miles: 47824,
     price: 27984,
-    imgUrl: "https://vini.gm.com/realimages/5FNRL6H73LB030151/1f78c9b.jpg"
+    imgUrl: "https://hips.hearstapps.com/hmg-prod/images/honda-odyssey-0150-1200x800-1596474650.jpg"
 };
 
 let nissan_leaf_2021 = {
