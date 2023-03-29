@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript">
+        var _smartsupp = _smartsupp || {};
+        _smartsupp.key = '61959ec611cd37b40c1e4d9fda9dbea4bcf5a264';
+        window.smartsupp||(function(d) {
+          var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+          s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+          c.type='text/javascript';c.charset='utf-8';c.async=true;
+          c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+        })(document);
+        </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,14 +30,21 @@
 
 <section id="header2">
     <my-header></my-header>
-    <div class="banner">
-        <h1>Shop Now</h1>
-        <p>Browse our diverse catalog of cars - by filter, or by all listings.</p>
-    </div>
   </section>
+
+<!--Search bar-->
+<div class="searchEmpty"></div>
+<div class="searchContainer">
+    <div class="innerSearchContainer">
+        <input type="text" class="searchBar" placeholder="Search by keyword (e.g. make, model, year, color, fuel, drive, and car type)">
+        <div class="suggestions"></div>
+    </div>
+</div>
+
 <!--Filter-->
 <div class="shopContainer">
     
+<div class="filterWrapper">
 <div id="filter">
     <div class="clear">
         <h1>Clear Filters</h1>
@@ -91,7 +108,7 @@
             <span class="selected">Sort By</span>
             <div class="caret"></div>
         </div>
-        <ul class="menu">
+        <ul class="menu scroll">
             <li class="filter-line">Default</li>
             <li class="filter-line">Price (ascending)</li>
             <li class="filter-line">Price (descending)</li>
@@ -102,6 +119,7 @@
         </ul>
     </div>
 </div>
+</div>
 
 <!--Show all listings based on filter-->
 <div class="car-cards-wrapper">
@@ -111,6 +129,8 @@
 </div>
 
 </div>
+
+<div class="carBreak"></div>
 
 <!--Footer-->
 <my-footer></my-footer>

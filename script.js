@@ -1016,6 +1016,7 @@ let volvo_v70_2006 = {
     imgUrl: "https://static.cargurus.com/images/forsale/2022/12/14/07/20/2006_volvo_v70-pic-3987302449415657689-1024x768.jpeg"
 };
 
+let tradeSelected = false;
 
 //ACCORDION JS FUNCTIONALITY
 const items = document.querySelectorAll('.accordion button');
@@ -1649,7 +1650,14 @@ window.onload = function(){
         document.querySelector(".img-fluid").src = selectedCar.img;
     }
     updateColorblind();
+
+    if(window.location != "sell.html"){
+        tradeSelected = false;
+        sessionStorage.setItem("trade", tradeSelected);
+    }
 }
+
+
 
 
 let colorblindSetting = 0;
@@ -1720,3 +1728,187 @@ function updateColorblind(){
     else if(colorblindSetting == 3) applyTritanopia();
 }
 
+
+//HEADER SCROLLING
+document.addEventListener("scroll", function(){
+    let wrapper1 = document.querySelector(".wrapper1");
+    if(window.scrollY > 150){
+        wrapper1.classList.add("scrolled");
+    }
+    else{
+        wrapper1.classList.remove("scrolled");
+    }
+
+    //filter scrolling
+    if(document.getElementById("filter") != null){
+        let fil = document.getElementById("filter");
+        let sea = document.querySelector(".searchContainer");
+        let emp = document.querySelector(".searchEmpty");
+        if(window.scrollY > 150 && window.scrollY < 4050){
+            fil.classList.add("filterScrolled");
+            sea.classList.add("searchScrolled");
+            emp.classList.add("emptyHeight");
+        }
+        else{
+            fil.classList.remove("filterScrolled");
+            sea.classList.remove("searchScrolled");
+            emp.classList.remove("emptyHeight");
+        }
+    }
+})
+
+
+
+
+if(document.querySelector(".tradeBtn") != null){
+    document.querySelector(".tradeBtn").addEventListener("click", function(){
+    tradeSelected = true;
+    sessionStorage.setItem("trade", tradeSelected);
+    window.location = "sell.html";
+});
+}
+
+window.addEventListener("DOMContentLoaded", function(){
+    tradeSelected = sessionStorage.getItem("trade") == "true";
+    if(document.getElementById("pills-sell") != null){
+        if(tradeSelected){
+            switchToTrade();
+        }
+    }
+});
+
+function switchToTrade(){
+    document.getElementById("pills-sell").classList.remove("active");
+        document.getElementById("pills-sell").classList.remove("show");
+        document.getElementById("pills-home-tab").classList.remove("active");
+        document.getElementById("pills-trade").classList.add("active");
+        document.getElementById("pills-trade").classList.add("show");
+        document.getElementById("pills-profile-tab").classList.add("active");
+}
+
+
+
+
+
+//SEARCH FUNCTIONALITY
+let descStrings = [];
+let newAllCars = [];
+
+allCars.forEach(car => {
+    let currString = "";
+    currString += car.make.toLowerCase();
+    currString += " " + car.model.toLowerCase();
+    currString += " " + car.year;
+    currString += " " + car.fuelType.toLowerCase();
+    currString += " " + car.driveType.toLowerCase();
+    currString += " " + car.carType.toLowerCase();
+    currString += " " + car.color.toLowerCase();
+    descStrings.push(currString);
+});
+
+for(let i = 0; i < allCars.length; i++){
+    let currCar = allCars[i];
+    currCar.string = descStrings[i];
+    newAllCars.push(currCar);
+}
+
+
+function updateSearch(){
+    if(document.querySelector(".searchBar").value == ""){
+        //reset valid cars to what filters are currently applied
+        refreshBoard();
+    }
+    else{
+        //take current valid cars array and only show cars that are valid from the search
+        let search = document.querySelector(".searchBar").value;
+        let searchItems = search.split(" ");
+        console.log(searchItems);
+        let tempValidCars = [];
+        allCars.forEach(car => {
+            let isValidCar = false;
+            let carItems = car.string.replace(/\s/g, '');
+            searchItems.forEach(item => {
+                if(carItems.includes(item)) isValidCar = true;
+            });
+            if(isValidCar){
+                tempValidCars.push(car);
+            }
+        });
+        
+        //update tempValidCars to account for filters
+        validCars = [];
+        let make = document.querySelector(".makes").querySelector(".selected");
+        let year = document.querySelector(".years").querySelector(".selected");
+        let fuelType = document.querySelector(".fuel-types").querySelector(".selected");
+        let carType = document.querySelector(".car-types").querySelector(".selected");
+        let color = document.querySelector(".colors").querySelector(".selected");
+        let condition = document.querySelector(".conditions").querySelector(".selected");
+
+        if (make.innerHTML == "Make") make = null;
+        if (year.innerHTML == "Year") year = null;
+        if (fuelType.innerHTML == "Fuel Type") fuelType = null;
+        if (carType.innerHTML == "Car (Body) Type") carType = null;
+        if (color.innerHTML == "Color") color = null;
+        if (condition.innerHTML == "Condition") condition = null;
+
+        tempValidCars.forEach(car => {
+            if (make != null) {
+                if (!make.innerHTML.includes(car.make)) return;
+            }
+            if (year != null) {
+                if (!year.innerHTML.includes(car.year)) return;
+            }
+            if (fuelType != null) {
+                if (!fuelType.innerHTML.includes(car.fuelType)) return;
+            }
+            if (carType != null) {
+                if (!carType.innerHTML.includes(car.carType)) return;
+            }
+            if (color != null) {
+                if (!color.innerHTML.includes(car.color)) return;
+            }
+            if (condition != null) {
+                if (condition.innerHTML !== (car.condition)) return;
+            }
+            validCars.push(car);
+        });
+
+        if (validCars.length == 0) addNoCarMessage();
+
+
+        clearBoard();
+        removeNoCarMessage();
+        applySort();
+        buildBoard(validCars);
+
+        document.querySelectorAll(".car-card-col").forEach(card => {
+            card.addEventListener("click", function(){
+                selectedCar.carFullName = card.querySelector(".carFullName").innerHTML;
+                selectedCar.carMiles = card.querySelector(".carMiles").innerHTML;
+                selectedCar.carPrice = card.querySelector(".carPrice").innerHTML;
+                selectedCar.carTrim = card.querySelector(".carTrim").innerHTML;
+                selectedCar.carTransmission = card.querySelector(".carTransmission").innerHTML;
+                selectedCar.carCylinders = card.querySelector(".carCylinders").innerHTML;
+                selectedCar.carHorsepower = card.querySelector(".carHorsepower").innerHTML;
+                selectedCar.carFuelType = card.querySelector(".carFuelType").innerHTML;
+                selectedCar.carCityMPG = card.querySelector(".carCityMPG").innerHTML;
+                selectedCar.carHwyMPG = card.querySelector(".carHwyMPG").innerHTML;
+                selectedCar.carDriveType = card.querySelector(".carDriveType").innerHTML;
+                selectedCar.carCarType = card.querySelector(".carCarType").innerHTML;
+                selectedCar.carColor = card.querySelector(".carColor").innerHTML;
+                selectedCar.carCondition = card.querySelector(".carCondition").innerHTML;
+                selectedCar.img = card.querySelector(".card-img-top").src;
+                sessionStorage.setItem("selectedCar", JSON.stringify(selectedCar));
+                window.location = "buycar.html";
+            });
+        });
+    }
+}
+
+
+if(document.querySelector(".searchBar") != null){
+    document.querySelector(".searchBar").addEventListener("input", function(){
+        console.log('fa')
+        updateSearch();
+    });
+}
