@@ -28,24 +28,12 @@
 <body>
     <!-----Header section-->
 <section id="header2">
-    <div class="wrapper1">
-      <nav>
-        <a href="index.html"><img src="../images/logos/logosquareblack.png" alt="logo"></a>
-        <ul>
-          <i class='bx bx-window-close' onclick="hideMenu()"></i>
-          <li><a href="shop.html" onclick="hideMenu()">Buy</a></li>
-          <li><a href="sell.html" onclick="hideMenu()">Sell/Trade</a></li>
-          <li><a href="about.html" onclick="hideMenu()">About</a></li>
-          <li><a href="contact.html" onclick="hideMenu()">Contact</a></li>
-        </ul>
-      </nav>
-      <i class='bx bx-menu'onclick="showMenu()"></i>
-    </div>
+  <my-header></my-header>
   </section>
   <div class="outerFormDiv">
   <form action="SEND ADDRESS" id="ft-form" method="POST" accept-charset="UTF-8">
     <fieldset>
-      <legend class = center>Set up an appointment</legend>
+      <h3 class = center style="font-size: 40px;">Set up an appointment</h3>
       <label>
         Name
         <input type="text" name="name" required class="blackText">
@@ -94,9 +82,11 @@
         
       </div>
     </fieldset>
-    <div class="btns blackText">
-        <a href="thankyou.html" class="submitAppt"><div class="bg-light mt-3 p-3 rounded-3 buyNow">Submit </div></a>
-    </div>
+      <a href="thankyou.html">
+        <div class="submitButton">
+            Submit
+        </div>
+      </a>
   </form>
 </div>
 <my-footer></my-footer>

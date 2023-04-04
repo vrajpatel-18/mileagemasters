@@ -29,65 +29,27 @@
     <script src="https://smtpjs.com/v3/smtp.js"></script>
 </head>
 <body>
-<!-----Header section-->
-<section id="header2">
-    <my-header></my-header>
-    <div class="banner">
-        <h1>Contact Us</h1>
-        <p></p>
+    <div class="formcarry-container">
+        <form action="https://formcarry.com/s/fqePDxZAzX" method="POST" accept-charset="UTF-8">
+        <label for="email">Email</label>
+        <input type="email" id="name" name="email" required />
+
+        <label for="name">First Name</label>
+        <input type="text" id="email" name="firstName" required />
+
+        <label for="name">Last  Name</label>
+        <input type="text" id="email" name="lastName" required />
+
+        <label for="message">Your Message</label>
+        <input type="text" id="email" name="anotherInput" required />
+
+        <input type="hidden" name="_gotcha"><!-- use this to prevent spam -->
+
+
+        <button type="submit">Send</button>
+      </form>
     </div>
-</section>
-<!--Contact Us Form -->
-<div class="container pt-5">
-    <div class="row">
-        <div class="col-md-5">
-            <h4  class="display-6 mb-4">Let us know your thoughts.</h4>
-            <p class="fw-light">Fill out this form with your questions and/or comments and we will get back to you as soon as possible.</p>
-        </div>
-        <div class="col-md-7 px-md-5">
-            <form id="fcf-form-id" class="contact-form" method="post" action="form.php">
-                <div class="mb-3">
-                    <label for="Name" class="small text-light fw-light mb-2">Name</label>
-                    <input type="text" id="Name" name="Name" class="form-control rounded-0" required>
-                </div>
+    <script src="../script.js"></script>
+  </body>
 
-                <div class="mb-3">
-                    <label for="Email" class="small text-light fw-light mb-2">Email address</label>
-                    <div class="">
-                        <input type="email" id="Email" name="Email" class="form-control rounded-0" required>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="Message" class="small text-light fw-light mb-2">Message</label>
-                    <div class="">
-                        <textarea id="Message" name="Message" class="form-control rounded-0" rows="6" maxlength="3000" required></textarea>
-                    </div>
-                </div>
-
-                <div class="text-end">
-                    <a href="thankyou.html">
-                        <button type="submit" id="" class="btn btn-outline-light rounded-0 px-5">
-                            Send
-                        </button>
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!--Footer-->
-<my-footer></my-footer>
-
-<div class="loader-wrapper">
-  <span class="loader">
-    <span class="loader-inner">
-    </span>
-  </span>
-</div>
-
-
-
-<script src="../script.js"></script>
-</body>
 </html>

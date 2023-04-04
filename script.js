@@ -28,26 +28,30 @@ class MyFooter extends HTMLElement {
             <div class="footer-col1">
               <h4>Contact us:</h4>
               <ul>
-                <li><span class="material-icons">mail</span> mileagemasters@gmail.com</li>
-                <li><span class="material-icons">call</span> (630) 428-6000</li>
-                <li><span class="material-icons">location_on</span> 2360 95th St</li>
+                <li><a href="mailto: mileagemasters@gmail.com"><span class="material-icons">mail</span> mileagemasters@gmail.com</a></li>
+                <li><a href="tel:+16304286000"><span class="material-icons">call</span> (630) 428-6000</a></li>
+                <li><a href="https://goo.gl/maps/JZ1EX8QpBKxnfhWv9" target="_blank"><span class="material-icons">location_on</span> 2360 95th St</a></li>
               </ul>
             </div>
-            <div class="footer-col2 anim">
-              <h4><a href="shop.html">Shop</a></h4>
+            <div class="footer-col2">
+              <h4>Shop</h4>
               <ul>
                 <li><a href="shop.html">View all listings</a></li>
                 <li><a href="loanestimator.html">Loan estimator</a></li>
               </ul>
             </div>
-            <div class="footer-col2 anim">
-              <h4><a href="sell.html">Sell / Trade</a></h4>
-            </div>
-            <div class="footer-col2 anim">
-              <h4><a href="about.html">About</a></h4>
+            <div class="footer-col2">
+              <h4>Sell / Trade</h4>
               <ul>
+                <li><a href="sell.html">Sell</a></li>
+                <li class="tradeFoot"><a onclick="goToTrade()">Trade</a></li>
+                </ul>
+            </div>
+            <div class="footer-col2">
+              <h4>About</h4>
+              <ul>
+                <li><a href="about.html">About us</a></li>
                 <li><a href="contact.html">Contact form</a></li>
-                <li><a href="about.html">Hours</a></li>
               </ul>
             </div>
             <div class="footer-col2">
@@ -61,7 +65,7 @@ class MyFooter extends HTMLElement {
           </div>
         </div>
         <div class="copyright">
-          <p>Copyright © 2022 Mileage Masters</p>
+          <p>Copyright © 2023 Mileage Masters</p>
         </div>
       </footer>    
     `;
@@ -1320,6 +1324,9 @@ function checkValidCars() {
     let color = document.querySelector(".colors").querySelector(".selected");
     let condition = document.querySelector(".conditions").querySelector(".selected");
 
+    let minPrice = Number(document.querySelector(".input-min").value);
+    let maxPrice = Number(document.querySelector(".input-max").value);
+
     if (make.innerHTML == "Make") make = null;
     if (year.innerHTML == "Year") year = null;
     if (fuelType.innerHTML == "Fuel Type") fuelType = null;
@@ -1346,6 +1353,7 @@ function checkValidCars() {
         if (condition != null) {
             if (condition.innerHTML !== (car.condition)) return;
         }
+        if(car.price < minPrice || car.price > maxPrice) return;
         validCars.push(car);
     });
 
@@ -1403,35 +1411,128 @@ function applySort() {
 }
 
 function refreshBoard() {
-    if (document.querySelector(".makes") != null) {
-        clearBoard();
-        removeNoCarMessage();
-        checkValidCars();
-        applySort();
-        buildBoard(validCars);
+    if(document.querySelector(".searchBar") != null){
+        if(document.querySelector(".searchBar").value == ""){
+            if (document.querySelector(".makes") != null) {
+                clearBoard();
+                removeNoCarMessage();
+                checkValidCars();
+                applySort();
+                buildBoard(validCars);
+            }
+            //Add href to each card and update buycar.html page when clicked
+            document.querySelectorAll(".car-card-col").forEach(card => {
+                card.addEventListener("click", function(){
+                    selectedCar.carFullName = card.querySelector(".carFullName").innerHTML;
+                    selectedCar.carMiles = card.querySelector(".carMiles").innerHTML;
+                    selectedCar.carPrice = card.querySelector(".carPrice").innerHTML;
+                    selectedCar.carTrim = card.querySelector(".carTrim").innerHTML;
+                    selectedCar.carTransmission = card.querySelector(".carTransmission").innerHTML;
+                    selectedCar.carCylinders = card.querySelector(".carCylinders").innerHTML;
+                    selectedCar.carHorsepower = card.querySelector(".carHorsepower").innerHTML;
+                    selectedCar.carFuelType = card.querySelector(".carFuelType").innerHTML;
+                    selectedCar.carCityMPG = card.querySelector(".carCityMPG").innerHTML;
+                    selectedCar.carHwyMPG = card.querySelector(".carHwyMPG").innerHTML;
+                    selectedCar.carDriveType = card.querySelector(".carDriveType").innerHTML;
+                    selectedCar.carCarType = card.querySelector(".carCarType").innerHTML;
+                    selectedCar.carColor = card.querySelector(".carColor").innerHTML;
+                    selectedCar.carCondition = card.querySelector(".carCondition").innerHTML;
+                    selectedCar.img = card.querySelector(".card-img-top").src;
+                    sessionStorage.setItem("selectedCar", JSON.stringify(selectedCar));
+                    window.location = "buycar.html";
+                });
+            });
+        }
+        else{
+            //take current valid cars array and only show cars that are valid from the search
+            let search = document.querySelector(".searchBar").value;
+            let searchItems = search.split(" ");
+            let tempValidCars = [];
+            allCars.forEach(car => {
+                let isValidCar = false;
+                let carItems = car.string.replace(/\s/g, '');
+                searchItems.forEach(item => {
+                    if(carItems.includes(item)) isValidCar = true;
+                });
+                if(isValidCar){
+                    tempValidCars.push(car);
+                }
+            });
+            
+            //update tempValidCars to account for filters
+            validCars = [];
+            let make = document.querySelector(".makes").querySelector(".selected");
+            let year = document.querySelector(".years").querySelector(".selected");
+            let fuelType = document.querySelector(".fuel-types").querySelector(".selected");
+            let carType = document.querySelector(".car-types").querySelector(".selected");
+            let color = document.querySelector(".colors").querySelector(".selected");
+            let condition = document.querySelector(".conditions").querySelector(".selected");
+            let minPrice = Number(document.querySelector(".input-min").value);
+            let maxPrice = Number(document.querySelector(".input-max").value);
+
+            console.log(minPrice, maxPrice);
+
+            if (make.innerHTML == "Make") make = null;
+            if (year.innerHTML == "Year") year = null;
+            if (fuelType.innerHTML == "Fuel Type") fuelType = null;
+            if (carType.innerHTML == "Car (Body) Type") carType = null;
+            if (color.innerHTML == "Color") color = null;
+            if (condition.innerHTML == "Condition") condition = null;
+
+            tempValidCars.forEach(car => {
+                if (make != null) {
+                    if (!make.innerHTML.includes(car.make)) return;
+                }
+                if (year != null) {
+                    if (!year.innerHTML.includes(car.year)) return;
+                }
+                if (fuelType != null) {
+                    if (!fuelType.innerHTML.includes(car.fuelType)) return;
+                }
+                if (carType != null) {
+                    if (!carType.innerHTML.includes(car.carType)) return;
+                }
+                if (color != null) {
+                    if (!color.innerHTML.includes(car.color)) return;
+                }
+                if (condition != null) {
+                    if (condition.innerHTML !== (car.condition)) return;
+                }
+                if(car.price < minPrice || car.price > maxPrice) return;
+                validCars.push(car);
+            });
+
+            if (validCars.length == 0) addNoCarMessage();
+
+
+            clearBoard();
+            removeNoCarMessage();
+            applySort();
+            buildBoard(validCars);
+
+            document.querySelectorAll(".car-card-col").forEach(card => {
+                card.addEventListener("click", function(){
+                    selectedCar.carFullName = card.querySelector(".carFullName").innerHTML;
+                    selectedCar.carMiles = card.querySelector(".carMiles").innerHTML;
+                    selectedCar.carPrice = card.querySelector(".carPrice").innerHTML;
+                    selectedCar.carTrim = card.querySelector(".carTrim").innerHTML;
+                    selectedCar.carTransmission = card.querySelector(".carTransmission").innerHTML;
+                    selectedCar.carCylinders = card.querySelector(".carCylinders").innerHTML;
+                    selectedCar.carHorsepower = card.querySelector(".carHorsepower").innerHTML;
+                    selectedCar.carFuelType = card.querySelector(".carFuelType").innerHTML;
+                    selectedCar.carCityMPG = card.querySelector(".carCityMPG").innerHTML;
+                    selectedCar.carHwyMPG = card.querySelector(".carHwyMPG").innerHTML;
+                    selectedCar.carDriveType = card.querySelector(".carDriveType").innerHTML;
+                    selectedCar.carCarType = card.querySelector(".carCarType").innerHTML;
+                    selectedCar.carColor = card.querySelector(".carColor").innerHTML;
+                    selectedCar.carCondition = card.querySelector(".carCondition").innerHTML;
+                    selectedCar.img = card.querySelector(".card-img-top").src;
+                    sessionStorage.setItem("selectedCar", JSON.stringify(selectedCar));
+                    window.location = "buycar.html";
+                });
+            });
+        }
     }
-    //Add href to each card and update buycar.html page when clicked
-document.querySelectorAll(".car-card-col").forEach(card => {
-    card.addEventListener("click", function(){
-        selectedCar.carFullName = card.querySelector(".carFullName").innerHTML;
-        selectedCar.carMiles = card.querySelector(".carMiles").innerHTML;
-        selectedCar.carPrice = card.querySelector(".carPrice").innerHTML;
-        selectedCar.carTrim = card.querySelector(".carTrim").innerHTML;
-        selectedCar.carTransmission = card.querySelector(".carTransmission").innerHTML;
-        selectedCar.carCylinders = card.querySelector(".carCylinders").innerHTML;
-        selectedCar.carHorsepower = card.querySelector(".carHorsepower").innerHTML;
-        selectedCar.carFuelType = card.querySelector(".carFuelType").innerHTML;
-        selectedCar.carCityMPG = card.querySelector(".carCityMPG").innerHTML;
-        selectedCar.carHwyMPG = card.querySelector(".carHwyMPG").innerHTML;
-        selectedCar.carDriveType = card.querySelector(".carDriveType").innerHTML;
-        selectedCar.carCarType = card.querySelector(".carCarType").innerHTML;
-        selectedCar.carColor = card.querySelector(".carColor").innerHTML;
-        selectedCar.carCondition = card.querySelector(".carCondition").innerHTML;
-        selectedCar.img = card.querySelector(".card-img-top").src;
-        sessionStorage.setItem("selectedCar", JSON.stringify(selectedCar));
-        window.location = "buycar.html";
-    });
-});
 }
 
 
@@ -1655,6 +1756,9 @@ window.onload = function(){
         tradeSelected = false;
         sessionStorage.setItem("trade", tradeSelected);
     }
+    if(document.querySelector(".searchBar") != null){
+        document.querySelector(".searchBar").value = "";
+    }
 }
 
 
@@ -1744,7 +1848,12 @@ document.addEventListener("scroll", function(){
         let fil = document.getElementById("filter");
         let sea = document.querySelector(".searchContainer");
         let emp = document.querySelector(".searchEmpty");
-        if(window.scrollY > 150 && window.scrollY < 4050){
+
+        let body = document.body;
+        let html = document.documentElement;
+        let height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+        if(window.scrollY > 150 && window.scrollY < height - 1310){
             fil.classList.add("filterScrolled");
             sea.classList.add("searchScrolled");
             emp.classList.add("emptyHeight");
@@ -1762,10 +1871,8 @@ document.addEventListener("scroll", function(){
 
 if(document.querySelector(".tradeBtn") != null){
     document.querySelector(".tradeBtn").addEventListener("click", function(){
-    tradeSelected = true;
-    sessionStorage.setItem("trade", tradeSelected);
-    window.location = "sell.html";
-});
+        goToTrade();
+    });
 }
 
 window.addEventListener("DOMContentLoaded", function(){
@@ -1773,20 +1880,26 @@ window.addEventListener("DOMContentLoaded", function(){
     if(document.getElementById("pills-sell") != null){
         if(tradeSelected){
             switchToTrade();
+            tradeSelected = false;
+            sessionStorage.setItem("trade", tradeSelected);
         }
     }
 });
 
 function switchToTrade(){
     document.getElementById("pills-sell").classList.remove("active");
-        document.getElementById("pills-sell").classList.remove("show");
-        document.getElementById("pills-home-tab").classList.remove("active");
-        document.getElementById("pills-trade").classList.add("active");
-        document.getElementById("pills-trade").classList.add("show");
-        document.getElementById("pills-profile-tab").classList.add("active");
+    document.getElementById("pills-sell").classList.remove("show");
+    document.getElementById("pills-home-tab").classList.remove("active");
+    document.getElementById("pills-trade").classList.add("active");
+    document.getElementById("pills-trade").classList.add("show");
+    document.getElementById("pills-profile-tab").classList.add("active");
 }
 
-
+function goToTrade(){
+    tradeSelected = true;
+    sessionStorage.setItem("trade", tradeSelected);
+    window.location = "sell.html";
+}
 
 
 
@@ -1813,102 +1926,271 @@ for(let i = 0; i < allCars.length; i++){
 }
 
 
-function updateSearch(){
-    if(document.querySelector(".searchBar").value == ""){
-        //reset valid cars to what filters are currently applied
+if(document.querySelector(".searchBar") != null){
+    document.querySelector(".searchBar").addEventListener("input", function(){
         refreshBoard();
-    }
-    else{
-        //take current valid cars array and only show cars that are valid from the search
-        let search = document.querySelector(".searchBar").value;
-        let searchItems = search.split(" ");
-        console.log(searchItems);
-        let tempValidCars = [];
-        allCars.forEach(car => {
-            let isValidCar = false;
-            let carItems = car.string.replace(/\s/g, '');
-            searchItems.forEach(item => {
-                if(carItems.includes(item)) isValidCar = true;
-            });
-            if(isValidCar){
-                tempValidCars.push(car);
-            }
-        });
-        
-        //update tempValidCars to account for filters
-        validCars = [];
-        let make = document.querySelector(".makes").querySelector(".selected");
-        let year = document.querySelector(".years").querySelector(".selected");
-        let fuelType = document.querySelector(".fuel-types").querySelector(".selected");
-        let carType = document.querySelector(".car-types").querySelector(".selected");
-        let color = document.querySelector(".colors").querySelector(".selected");
-        let condition = document.querySelector(".conditions").querySelector(".selected");
-
-        if (make.innerHTML == "Make") make = null;
-        if (year.innerHTML == "Year") year = null;
-        if (fuelType.innerHTML == "Fuel Type") fuelType = null;
-        if (carType.innerHTML == "Car (Body) Type") carType = null;
-        if (color.innerHTML == "Color") color = null;
-        if (condition.innerHTML == "Condition") condition = null;
-
-        tempValidCars.forEach(car => {
-            if (make != null) {
-                if (!make.innerHTML.includes(car.make)) return;
-            }
-            if (year != null) {
-                if (!year.innerHTML.includes(car.year)) return;
-            }
-            if (fuelType != null) {
-                if (!fuelType.innerHTML.includes(car.fuelType)) return;
-            }
-            if (carType != null) {
-                if (!carType.innerHTML.includes(car.carType)) return;
-            }
-            if (color != null) {
-                if (!color.innerHTML.includes(car.color)) return;
-            }
-            if (condition != null) {
-                if (condition.innerHTML !== (car.condition)) return;
-            }
-            validCars.push(car);
-        });
-
-        if (validCars.length == 0) addNoCarMessage();
-
-
-        clearBoard();
-        removeNoCarMessage();
-        applySort();
-        buildBoard(validCars);
-
-        document.querySelectorAll(".car-card-col").forEach(card => {
-            card.addEventListener("click", function(){
-                selectedCar.carFullName = card.querySelector(".carFullName").innerHTML;
-                selectedCar.carMiles = card.querySelector(".carMiles").innerHTML;
-                selectedCar.carPrice = card.querySelector(".carPrice").innerHTML;
-                selectedCar.carTrim = card.querySelector(".carTrim").innerHTML;
-                selectedCar.carTransmission = card.querySelector(".carTransmission").innerHTML;
-                selectedCar.carCylinders = card.querySelector(".carCylinders").innerHTML;
-                selectedCar.carHorsepower = card.querySelector(".carHorsepower").innerHTML;
-                selectedCar.carFuelType = card.querySelector(".carFuelType").innerHTML;
-                selectedCar.carCityMPG = card.querySelector(".carCityMPG").innerHTML;
-                selectedCar.carHwyMPG = card.querySelector(".carHwyMPG").innerHTML;
-                selectedCar.carDriveType = card.querySelector(".carDriveType").innerHTML;
-                selectedCar.carCarType = card.querySelector(".carCarType").innerHTML;
-                selectedCar.carColor = card.querySelector(".carColor").innerHTML;
-                selectedCar.carCondition = card.querySelector(".carCondition").innerHTML;
-                selectedCar.img = card.querySelector(".card-img-top").src;
-                sessionStorage.setItem("selectedCar", JSON.stringify(selectedCar));
-                window.location = "buycar.html";
-            });
-        });
-    }
+    });
 }
 
 
-if(document.querySelector(".searchBar") != null){
-    document.querySelector(".searchBar").addEventListener("input", function(){
-        console.log('fa')
-        updateSearch();
+
+let rangeInput = document.querySelectorAll(".range-input input");
+let priceInput = document.querySelectorAll(".price-input input");
+let range = document.querySelector(".slider .progress");
+let priceGap = 1000;
+
+if(priceInput != null){
+    priceInput.forEach(input =>{ //when you input numbers into the text boxes
+        input.addEventListener("input", e =>{
+            let minPrice = parseInt(priceInput[0].value),
+            maxPrice = parseInt(priceInput[1].value);
+            
+            if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
+                if(e.target.className === "input-min"){
+                    rangeInput[0].value = minPrice;
+                    range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                }else{
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+            }
+            refreshBoard();
+        });
     });
+}
+
+if(rangeInput != null){
+    rangeInput.forEach(input =>{ //when you move the sliders
+        input.addEventListener("input", e =>{
+            let minVal = parseInt(rangeInput[0].value),
+            maxVal = parseInt(rangeInput[1].value);
+    
+            if((maxVal - minVal) < priceGap){
+                if(e.target.className === "range-min"){
+                    rangeInput[0].value = maxVal - priceGap
+                }else{
+                    rangeInput[1].value = minVal + priceGap;
+                }
+            }else{
+                priceInput[0].value = minVal;
+                priceInput[1].value = maxVal;
+                range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            }
+            refreshBoard();
+        });
+    });
+}
+
+
+let inputMin = document.querySelector(".input-min");
+let inputMax = document.querySelector(".input-max");
+let rangeMin = document.querySelector(".range-min");
+let rangeMax = document.querySelector(".range-max");
+
+if(inputMin != null){
+    inputMin.addEventListener('blur', function(){
+        if(inputMin.value == ""){
+            inputMin.value = "0";
+            range.style.left = "0%";
+            rangeMin.value = "0";
+        }
+        refreshBoard();
+    });
+    inputMax.addEventListener('blur', function(){
+        if(inputMax.value == ""){
+            inputMax.value = "200000";
+            range.style.right = "0%";
+            rangeMax.value = "200000";
+        }
+        refreshBoard();
+    });
+
+    inputMin.addEventListener("keydown", (e) => {
+        if(e.key === "Enter"){
+            if(inputMin.value == "" || Number(inputMin.value) < 0){
+                inputMin.value = "0";
+                range.style.left = "0%";
+                rangeMin.value = "0";
+            }
+            $(':focus').blur();
+            refreshBoard();
+        }
+    });
+
+    inputMax.addEventListener("keydown", (e) => {
+        if(e.key === "Enter"){
+            if(inputMax.value == "" || Number(inputMax.value) > 200000){
+                inputMax.value = "200000";
+                range.style.right = "0%";
+                rangeMax.value = "200000";
+            }
+            $(':focus').blur();
+            refreshBoard();
+        }
+    });
+
+    document.querySelector(".resetPrice").addEventListener("click", function(){
+        inputMin.value = "0";
+        range.style.left = "0%";
+        rangeMin.value = "0";
+
+        inputMax.value = "200000";
+        range.style.right = "0%";
+        rangeMax.value = "200000";
+        refreshBoard();
+    });
+}
+
+
+function isNumeric(str) {
+    if (typeof str != "string") return false
+    return !isNaN(str) &&
+           !isNaN(parseFloat(str))
+  }
+
+let priceSearch = document.getElementById("priceRangeSearch");
+let searchBtn = document.querySelector(".searchBtn");
+let invalidMsg = document.querySelector(".invalidMsg");
+
+if(priceSearch != null){
+    searchBtn.addEventListener("click", function(){
+        let tempStr = priceSearch.value;
+
+        if(tempStr == ""){
+            window.location = "shop.html";
+            let priceMin = "0";
+            let priceMax = "200000";
+            sessionStorage.setItem("priceMin", priceMin);
+            sessionStorage.setItem("priceMax", priceMax);
+            sessionStorage.setItem("loadedFromHome", true);
+            window.location = "shop.html";
+        }
+        else{
+            let priceRangeValid = true;
+            //CHECK IF THE PRICE RANGE IS VALID
+            if(tempStr.indexOf("-") == -1) priceRangeValid = false;
+            if(!isNumeric(tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',',''))) priceRangeValid = false;
+            if(!isNumeric(tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',',''))) priceRangeValid = false;
+            if(isNumeric(tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',','')) && isNumeric(tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',',''))){
+                if(Number(tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',','')) >= Number(tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',',''))) priceRangeValid = false;
+            }
+    
+            if(!priceRangeValid){
+                invalidMsg.classList.remove("hidden");
+            }
+            else{
+                invalidMsg.classList.add("hidden");
+                let priceMin = tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',','').replace(/\s/g, '').replace(/\./g, "");
+                let priceMax = tempStr.substring(tempStr.indexOf('-') + 1, tempStr.length).replaceAll(',','').replace(/\s/g, '').replace(/\./g, "");
+                sessionStorage.setItem("priceMin", priceMin);
+                sessionStorage.setItem("priceMax", priceMax);
+                sessionStorage.setItem("loadedFromHome", true);
+                window.location = "shop.html";
+            }
+        }
+    });
+    priceSearch.addEventListener("keydown", (e) => {
+        if(e.key === "Enter"){
+            let tempStr = priceSearch.value;
+
+            if(tempStr == ""){
+                window.location = "shop.html";
+                let priceMin = "0";
+                let priceMax = "200000";
+                sessionStorage.setItem("priceMin", priceMin);
+                sessionStorage.setItem("priceMax", priceMax);
+                sessionStorage.setItem("loadedFromHome", true);
+                window.location = "shop.html";
+            }
+            else{
+                let priceRangeValid = true;
+                //CHECK IF THE PRICE RANGE IS VALID
+                if(tempStr.indexOf("-") == -1) priceRangeValid = false;
+                if(!isNumeric(tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',',''))) priceRangeValid = false;
+                if(!isNumeric(tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',',''))) priceRangeValid = false;
+                if(isNumeric(tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',','')) && isNumeric(tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',',''))){
+                    if(Number(tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',','')) >= Number(tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',',''))) priceRangeValid = false;
+                }
+        
+                if(!priceRangeValid){
+                    invalidMsg.classList.remove("hidden");
+                }
+                else{
+                    invalidMsg.classList.add("hidden");
+                    let priceMin = tempStr.substring(0,tempStr.indexOf("-")).replaceAll(',','').replace(/\s/g, '').replace(/\./g, "");
+                    let priceMax = tempStr.substring(tempStr.indexOf("-") + 1, tempStr.length).replaceAll(',','').replace(/\s/g, '').replace(/\./g, "");
+                    sessionStorage.setItem("priceMin", priceMin);
+                    sessionStorage.setItem("priceMax", priceMax);
+                    sessionStorage.setItem("loadedFromHome", true);
+                    window.location = "shop.html";
+                }
+            }
+        }
+    });
+}
+
+
+let loadedFromHome = sessionStorage.getItem("loadedFromHome") == "true";
+if(window.location.pathname == "/shop.html"){
+    console.log(loadedFromHome)
+    if(loadedFromHome){
+        console.log(1)
+        loadedFromHome = false;
+        sessionStorage.setItem("loadedFromHome", false);
+        let priceMin = sessionStorage.getItem("priceMin");
+        let priceMax = sessionStorage.getItem("priceMax");
+
+        inputMin.value = priceMin;
+        range.style.left = "0%";
+        rangeMin.value = priceMin;
+
+        inputMax.value = priceMax;
+        range.style.right = "0%";
+        rangeMax.value = priceMax;
+
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+
+
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+
+        refreshBoard();
+    }
+    else{
+        console.log(2)
+        loadedFromHome = false;
+        sessionStorage.setItem("loadedFromHome", false);
+        let priceMin = "0";
+        let priceMax = "200000";
+
+        inputMin.value = priceMin;
+        range.style.left = "0%";
+        rangeMin.value = priceMin;
+
+        inputMax.value = priceMax;
+        range.style.right = "0%";
+        rangeMax.value = priceMax;
+
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+
+        if((maxVal - minVal) < priceGap){
+            if(e.target.className === "range-min"){
+                rangeInput[0].value = maxVal - priceGap
+            }else{
+                rangeInput[1].value = minVal + priceGap;
+            }
+        }else{
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+        }
+
+        refreshBoard();
+    }
 }
